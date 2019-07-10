@@ -13,3 +13,4 @@ These instructions will get you a copy of the project up and running on a window
 
 
 ## Who do I talk to? ##
+Sergio
