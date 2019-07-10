@@ -17,7 +17,7 @@ import com.dynatrace.se.bankjob.runner.BankTask;
  *
  * Remarks ------- - The 93rd Fibonacci number would overflow a long, but this
  * will take so long to compute with this function that we don't bother to check
- * for overflow. Copyright © 2000–2017, Robert Sedgewick and Kevin Wayne. Last
+ * for overflow. Copyright 2000-2017, Robert Sedgewick and Kevin Wayne. Last
  * updated: Fri Oct 20 14:12:12 EDT 2017.
  ******************************************************************************/
 
