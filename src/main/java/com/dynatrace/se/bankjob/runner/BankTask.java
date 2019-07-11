@@ -11,6 +11,11 @@ import java.net.URLConnection;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+
 import com.dynatrace.se.bankjob.data.BankData;
 import com.dynatrace.se.bankjob.fibonacci.Fibonacci;
 import com.dynatrace.se.bankjob.util.Helper;
@@ -24,6 +29,7 @@ public class BankTask {
 
 	private static Logger logger = Logger.getLogger(BankTask.class.getName());
 	private static BankData data = BankData.getInstance();
+	private static HttpClient client;
 
 	/**
 	 * Main method
@@ -124,11 +130,11 @@ public class BankTask {
 	 * @throws Exception
 	 */
 	static void doCheckUrl(String urlString) throws Exception {
-		URL url = new URL(urlString);
-		URLConnection conn = url.openConnection();
-		conn.connect();
-		String date = conn.getHeaderField("Date");
-	}
+		client = HttpClientBuilder.create().build();
+		HttpGet request = new HttpGet(urlString);
 
+		HttpResponse response = client.execute(request);
+		logger.info(urlString + "code:" + String.valueOf(response.getStatusLine().getStatusCode()));
+	}
 
 }

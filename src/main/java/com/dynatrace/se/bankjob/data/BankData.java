@@ -65,7 +65,7 @@ public class BankData {
 
 			String url = properties.getProperty("urls");
 			if (url != null) {
-				urls.addAll(Arrays.asList(url.split(",")));
+				urls.addAll(Arrays.asList(url.split("\\s*,\\s*")));
 			}
 
 			String bank = properties.getProperty("banks");
