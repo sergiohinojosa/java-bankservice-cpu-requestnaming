@@ -18,48 +18,47 @@ This application was made for an exercise presented on the EMEA Bootcamp. The pr
 
 #### Excurs
 
-> #### *Enhancing and customizing the service detection via API* 
-> This exercise was not handled in the sessions since we did not have time left. But it is just a POST request via our API. If you notice the BankService, there is a jobtype that calls URLs. All are from dynatrace and from different subdomains. Here is how you can 
-> split the different subdomains in different services so Dynatrace keeps track of the different services.
-> https://notes.lab.dynatrace.org/enhancing-and-customizing-the-dynatrace-service-detection/#public-network-subdomains
->
-> save the following json as myapirule.json file
->
-> ```
-> {
->     "name": "Dynatrace.com",
->     "type": "OPAQUE_AND_EXTERNAL_WEB_REQUEST",
->     "description": "",
->     "enabled": true,
->     "conditions": [
->         {
->             "attributeType": "TOP_LEVEL_DOMAIN",
->             "compareOperations": [
->                 {
->                     "type": "ENDS_WITH",
->                     "negate": false,
->                     "ignoreCase": "true",
->                     "values": [
->                         "dynatrace.com"
->                     ]
->                 }
->             ]
->         }
->     ],
->     "publicDomainName": {
->         "copyFromHostName": true
->     },
->     "port": {
->         "doNotUseForServiceId": true
->     }
-> }
-> ```
-> Now go to the GIT Terminal (since you have curl there installed) and export the following variables (Replace the values with your tenant and api-token)
-> export TENANT=https://vxt526.managed-sprint.dynalabs.io/e/sergio-hinojosa/
-> export TOKEN=2-AHF3jOTsOe_XxMA7RYj
-> Do a curl post request with the JSON payload.
-> `curl -X POST -H "Content-Type: application/json" -H "Authorization: Api-Token $TOKEN" -d @myrule.json $TENANT/api/config/v1/service/detectionRules/OPAQUE_AND_EXTERNAL_WEB_REQUEST`
+#### *Enhancing and customizing the service detection via API* 
+This exercise was not handled in the sessions since we did not have time left. But it is just a POST request via our API. If you notice the BankService, there is a jobtype that calls URLs. All are from dynatrace and from different subdomains. Here is how you can split the different subdomains in different services so Dynatrace keeps track of the different services.
+https://notes.lab.dynatrace.org/enhancing-and-customizing-the-dynatrace-service-detection/#public-network-subdomains
 
+save the following json as `myapirule.json` file
+ ```json
+ {
+     "name": "Dynatrace.com",
+     "type": "OPAQUE_AND_EXTERNAL_WEB_REQUEST",
+     "description": "",
+     "enabled": true,
+     "conditions": [
+         {
+             "attributeType": "TOP_LEVEL_DOMAIN",
+             "compareOperations": [
+                 {
+                     "type": "ENDS_WITH",
+                     "negate": false,
+                     "ignoreCase": "true",
+                     "values": [
+                         "dynatrace.com"
+                     ]
+                 }
+             ]
+         }
+     ],
+     "publicDomainName": {
+         "copyFromHostName": true
+     },
+     "port": {
+         "doNotUseForServiceId": true
+     }
+ }
+ ```
+Now go to the GIT Terminal (since you have curl there installed) and export the following variables (Replace the values with your tenant and api-token)
+```
+export TENANT=https://vxt526.managed-sprint.dynalabs.io/e/sergio-hinojosa/
+export TOKEN=2-AHF3jOTsOe_XxMA7RYj
+```
+Do a curl post request with the JSON payload.
+`curl -X POST -H "Content-Type: application/json" -H "Authorization: Api-Token $TOKEN" -d @myapirule.json $TENANT/api/config/v1/service/detectionRules/OPAQUE_AND_EXTERNAL_WEB_REQUEST`
 
 ## Prerequisites
 
