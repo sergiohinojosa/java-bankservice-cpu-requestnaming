@@ -1,15 +1,6 @@
 # Bankjob
 
-**TODO**
-
-- How to build the app (Docker build) 
-- Explain what happens before and after renaming
-- CPU Explanation
-- WebRequest renaming
-- unmonitored services via API
-- Screenshots
-- json configuration for request attributes, custom service and web request naming rules.
-- For Developers what to install (mvn, jdk, eclipse)
+This is a simple java application running in a container that executes different task in the background. The idea of this application is for educational purposes for creating a custom service and rename the transactions.  This way Dynatrace can automatically keep track of the different type of transactions being exposed via custom service.
 
 ## Running it
 
@@ -17,17 +8,78 @@
 docker run -d shinojosa/bankjob:v0.2
 ```
 
-This command will pull the image from docker hub. You only need docker and an internet connection.
+> This command will pull the image from docker hub. You only need docker and an internet connection. 
 
-## Getting started
-These instructions will get you a copy of the project up and running on a windows or linux machine.
+## Doing the exercise
+
+This application was made for an exercise presented on the EMEA Bootcamp. The principles and the hands-on exercise is presented in the following powerpoint presentation:
+
+[Request naming and Custom Services](https://dynatrace.sharepoint.com/:p:/s/Sales/EMEA/Edkk7r8TtxZItb3PslwUpPQBjNA2Qg7lGt4s4Ksyn5wm4Q?e=l0pZtx)
+
+#### Excurs
+
+> #### *Enhancing and customizing the service detection via API* 
+> This exercise was not handled in the sessions since we did not have time left. But it is just a POST request via our API. If you notice the BankService, there is a jobtype that calls URLs. All are from dynatrace and from different subdomains. Here is how you can 
+> split the different subdomains in different services so Dynatrace keeps track of the different services.
+> https://notes.lab.dynatrace.org/enhancing-and-customizing-the-dynatrace-service-detection/#public-network-subdomains
+>
+> save the following json as myapirule.json file
+>
+> ```
+> {
+>     "name": "Dynatrace.com",
+>     "type": "OPAQUE_AND_EXTERNAL_WEB_REQUEST",
+>     "description": "",
+>     "enabled": true,
+>     "conditions": [
+>         {
+>             "attributeType": "TOP_LEVEL_DOMAIN",
+>             "compareOperations": [
+>                 {
+>                     "type": "ENDS_WITH",
+>                     "negate": false,
+>                     "ignoreCase": "true",
+>                     "values": [
+>                         "dynatrace.com"
+>                     ]
+>                 }
+>             ]
+>         }
+>     ],
+>     "publicDomainName": {
+>         "copyFromHostName": true
+>     },
+>     "port": {
+>         "doNotUseForServiceId": true
+>     }
+> }
+> ```
+> Now go to the GIT Terminal (since you have curl there installed) and export the following variables (Replace the values with your tenant and api-token)
+> export TENANT=https://vxt526.managed-sprint.dynalabs.io/e/sergio-hinojosa/
+> export TOKEN=2-AHF3jOTsOe_XxMA7RYj
+> Do a curl post request with the JSON payload.
+> `curl -X POST -H "Content-Type: application/json" -H "Authorization: Api-Token $TOKEN" -d @myrule.json $TENANT/api/config/v1/service/detectionRules/OPAQUE_AND_EXTERNAL_WEB_REQUEST`
+
 
 ## Prerequisites
 
-## Installing
+- Docker
+- A Dynatrace tenant
 
-## Clone the repository
+## Developing and playing around with the application
 
+This application was created with Eclipse and Maven. There is a `conf` directory. In there there you can play around with the properties of the application. 
+
+### Import in Eclipse
+
+The project can be imported with pretty much any version of [Eclipse](https://www.eclipse.org/). 
+
+### Compiling
+
+You can compile the application directly with eclipse or with the following maven command:
+
+`mvn clean install`
 
 ## Author 
+
 sergio.hinojosa@dynatrace.com
