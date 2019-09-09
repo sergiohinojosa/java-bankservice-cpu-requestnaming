@@ -14,7 +14,7 @@ docker run -d shinojosa/bankjob:v0.2
 
 This application was made for an exercise presented on the EMEA Bootcamp. The principles and the hands-on exercise is presented in the following powerpoint presentation:
 
-[Request naming and Custom Services](https://dynatrace.sharepoint.com/:p:/s/Sales/EMEA/Edkk7r8TtxZItb3PslwUpPQBjNA2Qg7lGt4s4Ksyn5wm4Q?e=l0pZtx)
+### [Request naming and Custom Services (📃Slides)](https://dynatrace.sharepoint.com/:p:/s/Sales/EMEA/EfU8seuo31BEnEwM80dMD-4BsBQEKBSV_WL23KbXrGeN2Q?e=RDZTGS)
 
 #### Excurs
 
