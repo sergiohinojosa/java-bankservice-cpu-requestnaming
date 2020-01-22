@@ -1,9 +1,9 @@
 package com.dynatrace.se.bankjob.util;
 
 public enum Job {
-	RISKY_JOB("risky job"),
-	HEAVY_CALCULATION("heavy calculation job"),
-	CHECK_URL("check url job");
+	RISKY_JOB("doSomethingRisky Job"),
+	HEAVY_CALCULATION("heavyCalculation Job"),
+	CHECK_URL("checkUrl Job");
 	
 	private String text;
 	

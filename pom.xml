@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.dynatrace.se</groupId>
 	<artifactId>bankjob</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>perform</version>
 	<name>BankJob</name>
 	<description>A Sample Bank Job</description>
 	<dependencies>

@@ -79,6 +79,13 @@ You can compile the application directly with eclipse or with the following mave
 
 `mvn clean install`
 
+
+the version of the JAR is defined in the `pom.xml` definition file. If you change the version, change also the Dockerfile to point ot the right version.
+
+Create the Docker Image
+
+`docker build `
+
 ## Author 
 
 sergio.hinojosa@dynatrace.com

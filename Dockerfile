@@ -5,8 +5,6 @@ WORKDIR /opt/bankjob
 # the files to copy
 COPY target/lib ./lib
 COPY target/conf ./conf
-COPY target/bankjob-0.0.1-SNAPSHOT.jar ./
+COPY target/bankjob-perform.jar ./
 # not exposing any port with EXPOSE 
-CMD ["java", "-jar", "bankjob-0.0.1-SNAPSHOT.jar"]
-
-
+CMD ["java", "-jar", "bankjob-perform.jar"]

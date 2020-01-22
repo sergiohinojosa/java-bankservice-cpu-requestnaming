@@ -32,6 +32,8 @@ public class BankData {
 	public int threads;
 	public int failurerate;
 	public int sleepTime;
+	public int minfibbonacci;
+	public int maxfibbonacci;
 
 	public static BankData getInstance() {
 		if (BankData.instance == null) {
@@ -76,6 +78,14 @@ public class BankData {
 			String f = properties.getProperty("failurerate");
 			if (f != null) {
 				failurerate = Integer.valueOf(f);
+			}
+			String fmax = properties.getProperty("maxfibbonacci");
+			if (fmax != null) {
+				maxfibbonacci = Integer.valueOf(fmax);
+			}
+			String fmin = properties.getProperty("minfibbonacci");
+			if (fmin != null) {
+				minfibbonacci = Integer.valueOf(fmin);
 			}
 			String t = properties.getProperty("threads");
 			if (t != null) {

@@ -6,8 +6,6 @@ package com.dynatrace.se.bankjob.runner;
 import static com.dynatrace.se.bankjob.util.Helper.getRandomElement;
 import static com.dynatrace.se.bankjob.util.Helper.getRandomNumberInRange;
 
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -65,6 +63,7 @@ public class BankTask {
 				logger.info("Execute job [" + job + "] - Bank[" + bank + "]" + " sleep [" + sleepTime + "]s ThreadId["
 						+ tid + "]");
 				executeJob(job, bank);
+
 				TimeUnit.SECONDS.sleep(sleepTime);
 			} catch (Exception e) {
 				logger.severe(e.getLocalizedMessage());
@@ -118,10 +117,11 @@ public class BankTask {
 	}
 
 	/**
-	 * it will calculate the Fibonacci numbers in Range from 10 to 35.
+	 * it will calculate the Fibonacci numbers in Range from data.minfibbonacci to data.maxfibbonacci.
 	 */
 	private static void doHeavyCalculation() {
-		Fibonacci.fibonacci(getRandomNumberInRange(10, 35));
+		int numToCalculate = getRandomNumberInRange(data.minfibbonacci, data.maxfibbonacci);
+		Fibonacci.fibonacci(numToCalculate);
 	}
 
 	/**
