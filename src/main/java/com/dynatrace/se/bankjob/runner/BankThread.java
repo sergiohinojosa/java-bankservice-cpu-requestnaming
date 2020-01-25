@@ -4,18 +4,14 @@ public class BankThread extends Thread {
 	String bank;
 	String job;
 
-	public BankThread(String bank, String job) {
-		super();
-		
+	public BankThread(ThreadGroup g, String bank, String job, int i) {
+		super(g, bank + "-" + job + "-[" + i + "]");
 		this.bank = bank;
 		this.job = job;
-		}
+	}
 
 	public void run() {
 		BankTask.loopInJobsForever();
 	}
-	
-}
 
-	
-		
+}

@@ -2,8 +2,6 @@ package com.dynatrace.se.bankjob.fibonacci;
 
 import java.util.logging.Logger;
 
-import com.dynatrace.se.bankjob.runner.BankTask;
-
 /******************************************************************************
  * Compilation: javac Fibonacci.java Execution: java Fibonacci n
  *

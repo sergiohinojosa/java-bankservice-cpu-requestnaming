@@ -119,7 +119,11 @@ public class BankData {
 	/**
 	 * 
 	 */
-	private static void createLogFolderIfNotExists() {
+	public static void createLogFolderIfNotExists() {
+		createFolderIfNotExists(LOG_DIR);
+	}
+
+	public static void createFolderIfNotExists(String logPath) {
 		File file = null;
 		String absolutePath = null;
 		Class<?> referenceClass = BankData.class;
@@ -129,7 +133,6 @@ public class BankData {
 			// Get the parent directory
 			File CLASSPATH = new File(url.toURI()).getParentFile();
 			// get the file from where the jar is located.
-			String logPath = LOG_DIR;
 			absolutePath = CLASSPATH.getAbsolutePath() + "/" + logPath;
 			file = new File(absolutePath);
 			if (!file.exists()) {
@@ -150,7 +153,19 @@ public class BankData {
 	 * @throws FileNotFoundException
 	 */
 	public static File getFileFromConf(String filename) throws FileNotFoundException {
+		return getFileFrom(filename, CONF_DIR);
+	}
 
+	/**
+	 * Will look for a file in the conf directory next where this class/jar is being
+	 * located. If not found as default solution the file will be looked in a conf
+	 * directory relative to the Java execution.
+	 * 
+	 * @param file
+	 * @return
+	 * @throws FileNotFoundException
+	 */
+	public static File getFileFrom(String filename, String directory) {
 		File file = null;
 		String absolutePath = null;
 		Class<?> referenceClass = BankData.class;
@@ -160,7 +175,7 @@ public class BankData {
 			// Get the parent directory
 			File CLASSPATH = new File(url.toURI()).getParentFile();
 			// get the file from where the jar is located.
-			String relativePath = CONF_DIR + filename;
+			String relativePath = directory + filename;
 			absolutePath = CLASSPATH.getAbsolutePath() + "/" + relativePath;
 
 			file = new File(absolutePath);
@@ -168,6 +183,7 @@ public class BankData {
 			if (!file.exists()) {
 				file = new File(relativePath);
 			}
+
 			if (!file.exists()) {
 				System.err.println("The file can't be found in " + absolutePath + " nor relative " + relativePath);
 			}

@@ -9,6 +9,8 @@ import com.dynatrace.se.bankjob.util.Helper;
 import com.dynatrace.se.bankjob.util.Job;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import org.apache.http.HttpResponse;
@@ -40,17 +42,25 @@ public class BankTask {
 	 */
 	public static void main(String[] args) throws Exception {
 
+		// Create Thread Groups for each JobType
+		HashMap<String,ThreadGroup> threadGroups = new HashMap<String,ThreadGroup>();
+		for (String job : data.jobs) {
+			String groupName = job.replaceAll("\\s+","");
+			ThreadGroup g = new ThreadGroup(groupName + "-ThreadGroup");
+			threadGroups.put(groupName, g);
+		}
+		
 		// Initiate the amount of Threads
 		logger.info("Amount of threads " + data.threads);
 		for (int i = 0; i < data.threads; i++) {
 			String bank = getRandomElement(data.banks);
 			String job = getRandomElement(data.jobs);
-			BankThread t = new BankThread(bank, job);
+			ThreadGroup tg = threadGroups.get(job.replaceAll("\\s+",""));
+			BankThread t = new BankThread(tg, bank, job, i);
 			t.start();
 		}
 		logger.info("Done initializing threads with Main Thread");
-		//TODO Do something to the main thread.
-
+		// TODO Do something to the main thread? 
 	}
 
 	/**
@@ -136,19 +146,37 @@ public class BankTask {
 		Fibonacci.fibonacci(numToCalculate);
 	}
 
-	private static void doWriteReport() {
-		/*
-		 * Writer writer = null;
-		 * 
-		 * try { writer = new BufferedWriter(new OutputStreamWriter(new
-		 * FileOutputStream("filename.txt"), "utf-8")); writer.write("Something"); }
-		 * catch (IOException ex) { // Report } finally { try { writer.close(); } catch
-		 * (Exception ex) { // ignore } }
-		 */
-		File file = null;
-		file = new File("");
-		if (!file.exists()) {
-			file.mkdirs();
+	/**
+	 * Making a Synchronized Report Writer
+	 * 
+	 * @throws Exception
+	 */
+	synchronized private static void doWriteReport() throws Exception {
+
+		// We in the report directory
+		try {
+
+			File report = BankData.getFileFrom("report.txt", "");
+			BankThread t = (BankThread) Thread.currentThread();
+
+			FileWriter writer = new FileWriter(report);
+			writer.write("A report from Bank " + t.bank + " and Thread " + String.valueOf(t.getId()));
+			writer.write(System.lineSeparator());
+			writer.write("Write 100 lines report from Bank " + t.bank + " and Thread " + String.valueOf(t.getId()));
+			writer.write(System.lineSeparator());
+
+			for (int i = 0; i < 100; i++) {
+				writer.write("Line " + i + " - " + t.bank + " and Thread " + String.valueOf(t.getId()));
+				writer.write(System.lineSeparator());
+			}
+			writer.write("Report done for Bank " + t.bank + " and Thread " + String.valueOf(t.getId()));
+			writer.write(System.lineSeparator());
+			writer.close();
+			logger.info("Report for Bank " + t.bank + " - Thread " + String.valueOf(t.getId()) + " with Size: "
+					+ report.length());
+
+		} catch (Exception e) {
+			throw new Exception("Write Report failed:" + e.getLocalizedMessage(), e);
 		}
 	}
 
