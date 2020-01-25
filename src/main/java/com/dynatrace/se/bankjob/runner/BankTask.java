@@ -3,16 +3,18 @@ package com.dynatrace.se.bankjob.runner;
 import static com.dynatrace.se.bankjob.util.Helper.getRandomElement;
 import static com.dynatrace.se.bankjob.util.Helper.getRandomNumberInRange;
 
+import com.dynatrace.se.bankjob.data.BankData;
+import com.dynatrace.se.bankjob.fibonacci.Fibonacci;
+import com.dynatrace.se.bankjob.util.Helper;
+import com.dynatrace.se.bankjob.util.Job;
+
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
-import com.dynatrace.se.bankjob.data.BankData;
-import com.dynatrace.se.bankjob.fibonacci.Fibonacci;
-import com.dynatrace.se.bankjob.util.Helper;
-import com.dynatrace.se.bankjob.util.Job;
 
 /**
  * BankTask. Sample application to show the importance of Custom Service and
@@ -47,7 +49,7 @@ public class BankTask {
 			t.start();
 		}
 		logger.info("Done initializing threads with Main Thread");
-		// Do something to the main thread.
+		//TODO Do something to the main thread.
 
 	}
 
@@ -143,6 +145,11 @@ public class BankTask {
 		 * catch (IOException ex) { // Report } finally { try { writer.close(); } catch
 		 * (Exception ex) { // ignore } }
 		 */
+		File file = null;
+		file = new File("");
+		if (!file.exists()) {
+			file.mkdirs();
+		}
 	}
 
 	/**
