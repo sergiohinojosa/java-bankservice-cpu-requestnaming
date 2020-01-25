@@ -44,9 +44,10 @@ public class BankTask {
 
 		// Create Thread Groups for each JobType
 		HashMap<String,ThreadGroup> threadGroups = new HashMap<String,ThreadGroup>();
+		ThreadGroup base = new ThreadGroup("BankServices");
 		for (String job : data.jobs) {
-			String groupName = job.replaceAll("\\s+","");
-			ThreadGroup g = new ThreadGroup(groupName + "-ThreadGroup");
+			String groupName = job.replace(" job","").toLowerCase();
+			ThreadGroup g = new ThreadGroup(base, groupName);
 			threadGroups.put(groupName, g);
 		}
 		
@@ -55,7 +56,8 @@ public class BankTask {
 		for (int i = 0; i < data.threads; i++) {
 			String bank = getRandomElement(data.banks);
 			String job = getRandomElement(data.jobs);
-			ThreadGroup tg = threadGroups.get(job.replaceAll("\\s+",""));
+			String jName = job.replace(" job","").toLowerCase();
+			ThreadGroup tg = threadGroups.get(jName);
 			BankThread t = new BankThread(tg, bank, job, i);
 			t.start();
 		}

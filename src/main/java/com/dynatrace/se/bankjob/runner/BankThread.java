@@ -5,7 +5,7 @@ public class BankThread extends Thread {
 	String job;
 
 	public BankThread(ThreadGroup g, String bank, String job, int i) {
-		super(g, bank + "-" + job + "-[" + i + "]");
+		super(g, job.replace(" job", "ThreadGroup") + "- [" + i + "]");
 		this.bank = bank;
 		this.job = job;
 	}
