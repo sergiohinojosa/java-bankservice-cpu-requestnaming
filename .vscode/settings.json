@@ -1,9 +1,18 @@
+/*
+    "workbench.colorCustomizations": {
+        "tab.activeBackground": "#16181b",
+        "activityBar.background": "#282c34",
+        "activityBar.foreground": "#13bb37",
+        "activityBarBadge.foreground": "#13bb37",
+        "sideBar.background": "#16181b",
+        "editor.background": "#131313" 
+    },
+
 {
-    "files.exclude": {
-        "**/.classpath": true,
-        "**/.project": true,
-        "**/.settings": true,
-        "**/.factorypath": true
+    "workbench.colorCustomizations": {
+        "activityBar.foreground": "#13bb37",
+        "activityBarBadge.foreground": "#13bb37",
     },
     "java.configuration.updateBuildConfiguration": "automatic"
 }
+*/

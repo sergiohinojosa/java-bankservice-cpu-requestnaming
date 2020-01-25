@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dynatrace.se.bankjob.runner;
 
 import static com.dynatrace.se.bankjob.util.Helper.getRandomElement;
@@ -8,19 +5,23 @@ import static com.dynatrace.se.bankjob.util.Helper.getRandomNumberInRange;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
-
 import com.dynatrace.se.bankjob.data.BankData;
 import com.dynatrace.se.bankjob.fibonacci.Fibonacci;
 import com.dynatrace.se.bankjob.util.Helper;
 import com.dynatrace.se.bankjob.util.Job;
 
 /**
- * @author sergio.hinojosa
+ * BankTask. Sample application to show the importance of Custom Service and
+ * proper Request Naming rules. How to leverage Dynatrace AI (DAVIS) with proper
+ * naming and exposure of the transacions. Also a sample to demonstrate the
+ * Thread Capabilities and CPU Analysis.
+ * 
+ * @author sergio.hinojosa@dynatrace.com
+ * 
  *
  */
 public class BankTask {
@@ -40,29 +41,33 @@ public class BankTask {
 		// Initiate the amount of Threads
 		logger.info("Amount of threads " + data.threads);
 		for (int i = 0; i < data.threads; i++) {
-			BankThread t = new BankThread();
+			String bank = getRandomElement(data.banks);
+			String job = getRandomElement(data.jobs);
+			BankThread t = new BankThread(bank, job);
 			t.start();
 		}
-		logger.info("Done initializing threads ");
+		logger.info("Done initializing threads with Main Thread");
+		// Do something to the main thread.
+
 	}
 
 	/**
-	 * The Job will be executed forever
-	 * 
+	 * The Job will be executed forever. This represents a single Thread instance
 	 */
+
 	static void loopInJobsForever() {
+
 		boolean loopForever = true;
 		while (loopForever) {
-			String bank = getRandomElement(data.banks);
 
-			String job = getRandomElement(data.jobs);
-			long tid = Thread.currentThread().getId();
+			BankThread t = (BankThread) Thread.currentThread();
 
 			try {
 				int sleepTime = getRandomNumberInRange(0, data.sleepTime);
-				logger.info("Execute job [" + job + "] - Bank[" + bank + "]" + " sleep [" + sleepTime + "]s ThreadId["
-						+ tid + "]");
-				executeJob(job, bank);
+				logger.info("Execute job [" + t.job + "] - Bank[" + t.bank + "]" + " sleep [" + sleepTime
+						+ "]s ThreadId[" + t.getId() + "]");
+
+				executeJob(t.job, t.bank);
 
 				TimeUnit.SECONDS.sleep(sleepTime);
 			} catch (Exception e) {
@@ -85,10 +90,14 @@ public class BankTask {
 			doRiskyJob();
 			break;
 		case HEAVY_CALCULATION:
-			doHeavyCalculation();
+			int numToCalculate = getRandomNumberInRange(data.minfibbonacci, data.maxfibbonacci);
+			doHeavyCalculation(numToCalculate);
 			break;
 		case CHECK_URL:
 			doCheckUrl(Helper.getRandomElement(data.urls));
+			break;
+		case WRITE_REPORT:
+			doWriteReport();
 			break;
 
 		default:
@@ -97,6 +106,7 @@ public class BankTask {
 	}
 
 	/**
+	 * 
 	 * 
 	 * @throws Exception
 	 */
@@ -117,14 +127,26 @@ public class BankTask {
 	}
 
 	/**
-	 * it will calculate the Fibonacci numbers in Range from data.minfibbonacci to data.maxfibbonacci.
+	 * it will calculate the Fibonacci numbers in Range from data.minfibbonacci to
+	 * data.maxfibbonacci.
 	 */
-	private static void doHeavyCalculation() {
-		int numToCalculate = getRandomNumberInRange(data.minfibbonacci, data.maxfibbonacci);
+	private static void doHeavyCalculation(int numToCalculate) {
 		Fibonacci.fibonacci(numToCalculate);
 	}
 
+	private static void doWriteReport() {
+		/*
+		 * Writer writer = null;
+		 * 
+		 * try { writer = new BufferedWriter(new OutputStreamWriter(new
+		 * FileOutputStream("filename.txt"), "utf-8")); writer.write("Something"); }
+		 * catch (IOException ex) { // Report } finally { try { writer.close(); } catch
+		 * (Exception ex) { // ignore } }
+		 */
+	}
+
 	/**
+	 * 
 	 * 
 	 * @param urlString
 	 * @throws Exception
