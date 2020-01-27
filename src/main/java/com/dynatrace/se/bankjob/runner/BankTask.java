@@ -3,6 +3,8 @@ package com.dynatrace.se.bankjob.runner;
 import static com.dynatrace.se.bankjob.util.Helper.getRandomElement;
 import static com.dynatrace.se.bankjob.util.Helper.getRandomNumberInRange;
 
+import com.dynatrace.se.bankjob.business.BankBusinessException;
+import com.dynatrace.se.bankjob.business.BankUrlBusinessException;
 import com.dynatrace.se.bankjob.data.BankData;
 import com.dynatrace.se.bankjob.fibonacci.Fibonacci;
 import com.dynatrace.se.bankjob.util.Helper;
@@ -43,26 +45,26 @@ public class BankTask {
 	public static void main(String[] args) throws Exception {
 
 		// Create Thread Groups for each JobType
-		HashMap<String,ThreadGroup> threadGroups = new HashMap<String,ThreadGroup>();
+		HashMap<String, ThreadGroup> threadGroups = new HashMap<String, ThreadGroup>();
 		ThreadGroup base = new ThreadGroup("BankServices");
 		for (String job : data.jobs) {
-			String groupName = job.replace(" job","").toLowerCase();
+			String groupName = job.replace(" job", "").toLowerCase();
 			ThreadGroup g = new ThreadGroup(base, groupName);
 			threadGroups.put(groupName, g);
 		}
-		
+
 		// Initiate the amount of Threads
 		logger.info("Amount of threads " + data.threads);
 		for (int i = 0; i < data.threads; i++) {
 			String bank = getRandomElement(data.banks);
 			String job = getRandomElement(data.jobs);
-			String jName = job.replace(" job","").toLowerCase();
+			String jName = job.replace(" job", "").toLowerCase();
 			ThreadGroup tg = threadGroups.get(jName);
 			BankThread t = new BankThread(tg, bank, job, i);
 			t.start();
 		}
 		logger.info("Done initializing threads with Main Thread");
-		// TODO Do something to the main thread? 
+		// TODO Do something to the main thread?
 	}
 
 	/**
@@ -85,7 +87,7 @@ public class BankTask {
 
 				TimeUnit.SECONDS.sleep(sleepTime);
 			} catch (Exception e) {
-				logger.severe(e.getLocalizedMessage());
+				logger.severe(e.getMessage());
 			}
 		}
 	}
@@ -136,7 +138,7 @@ public class BankTask {
 				x = shouldFail / data.failurerate;
 			}
 		} catch (Exception e) {
-			throw new Exception("Risky job failed:" + e.getLocalizedMessage(), e);
+			throw new BankBusinessException("Risky job failed:" + e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -178,7 +180,7 @@ public class BankTask {
 					+ report.length());
 
 		} catch (Exception e) {
-			throw new Exception("Write Report failed:" + e.getLocalizedMessage(), e);
+			throw new BankBusinessException("Write Report failed:" + e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -193,7 +195,12 @@ public class BankTask {
 		HttpGet request = new HttpGet(urlString);
 
 		HttpResponse response = client.execute(request);
-		logger.info(urlString + "code:" + String.valueOf(response.getStatusLine().getStatusCode()));
+		int statusCode = response.getStatusLine().getStatusCode();
+		if (statusCode < 500) {
+			logger.info(urlString + " code:" + String.valueOf(statusCode));
+		} else {
+			throw new BankUrlBusinessException(
+					"Ooppsala, there was an Error calling the Url:" + urlString + ", it returned HTTP " + statusCode);
+		}
 	}
-
 }

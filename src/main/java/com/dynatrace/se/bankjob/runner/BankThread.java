@@ -13,5 +13,4 @@ public class BankThread extends Thread {
 	public void run() {
 		BankTask.loopInJobsForever();
 	}
-
 }
