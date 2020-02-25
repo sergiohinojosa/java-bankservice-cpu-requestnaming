@@ -15,20 +15,21 @@ This is a simple java application that can run as a standalone JVM or inside a d
 - [Docker](https://www.docker.com/)
 - [A Dynatrace Tenant](https://www.dynatrace.com/trial/?gclid=Cj0KCQiAqNPyBRCjARIsAKA-WFzFj8-YaXYjzaY7uVGj0klG2KnGTs2WaQ8Wg3AI_Z8dX2Fzy9-fOy4aAu5IEALw_wcB)
 
-## Doing the Tutorial
+## ✍ Doing the tutorial
 
 The version shinojosa/bankjob:perform2020 was presented in the Session Advanced Diagnostics with Dynatrace during the event [Perform 2020 in las Vegas](https://www.dynatrace.com/perform-vegas/).  The Slides for doing this exercise are in the [Dynatrace University 👨‍🎓](https://university.dynatrace.com/)  under the Advanced Diagnostics with Dynatrace Session under Perform 2020. 
 
-> In the Perform2020 version of the Bankjob, the checkURL job calls a REST endpoint of the EasyTravel application. A problem was triggered for the Students environment via REST and the performance degradation was analyzed on real time and on demand starting from the Bankservice.
->
-> 
-
-- ### [Running , configuring and developing the Bankservice App](bankservice-explained.md)
+In the *Perform2020* version of the Bankservice, the checkURL job calls a REST endpoint of the EasyTravel application through the docker network of the host which is hosting also EasyTravel. A problem was triggered for the Students environment via REST and the performance degradation was analyzed on real time and on demand starting from the Bankservice. For setting up such an environment take a loot at the [Dynatrace REST Tenant Automation](https://github.com/sergiohinojosa/Dynatrace-REST-Tenant-Automation)
 
 
-- ### [Excurs - Enhancing and customizing the Service Detection via API](excurs-service-detection-api.md)
+
+- ### [🛠 Running , configuring and developing the Bankservice App](bankservice-explained.md)
 
 
-#### Author 
+- ### [📗 Excurs - Enhancing and customizing the Service Detection via API](excurs-service-detection-api.md)
 
-sergio.hinojosa@dynatrace.com
+
+
+
+
+#### Author sergio.hinojosa@dynatrace.com

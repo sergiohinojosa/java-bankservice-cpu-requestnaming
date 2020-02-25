@@ -1,29 +1,61 @@
-# Running the application 
+# Understanding the Bankservice Application
+
+## Running the application 
 
 ```bash
 docker run -d shinojosa/bankjob:perform2020
 ```
-
 > This command will pull the image from docker hub. You only need docker and an internet connection. The version downloaded is the version presented in [Perform 2020 in las Vegas](https://www.dynatrace.com/perform-vegas/).  
-
 
 
 #  Developing and playing around with the application
 
-This application was created with Eclipse and Maven. There is a `conf` directory. In there there you can play around with the properties of the application. 
+This application was created with [Visual Code](https://code.visualstudio.com/) and [Maven](https://maven.apache.org/). There is a `conf` directory. In there there you can play around with the properties of the application. 
 
-## Import in Eclipse
+## The Bankjob.properties
 
-The project can be imported with pretty much any version of [Eclipse](https://www.eclipse.org/). 
+```properties
+# Urls to check
+urls=https://blog.dynatrace.com,https://help.dynatrace.com,https://www.dynatrace.com,http://172.17.0.1:9080/easytravel/rest/journeys/recommendation/
+# The Amount and Name of the Banks that execute Jobs
+banks=Dynatrace Bank,ACME Bank,Swiss Bank,EasyTravel Bank
+# The Failurerate of the Riskyjob, int values from 0 to 100
+failurerate=50
+# The Fibbonacci calculations from the heavyCalculatoin Job. It will do fibonnaci(random(min, max))
+# Be carefull, this calculation is very imperformant.
+minfibbonacci=10
+maxfibbonacci=37
+# The amount of Threads to start in the Background and asigned to ThreadGroups.
+threads=25
+# Maximal sleep time between job execution (its called with random) in s
+sleeptime=6
+```
+
+
+
+## The Application Structure
+
+
+
+## Open in Visual Studio Code 
+
+For a better experience I recommend developing (if in Windows) with [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) and Visual Code connected as remote extension on the local machine. Go to your WSL bash terminal, clone the repository and open visual code:
+
+```bash
+git clone https://github.com/sergiohinojosa/java-bankservice-cpu-requestnaming
+cd java-bankservice-cpu-requestnaming
+code .
+```
 
 ### Compiling
 
 You can compile the application directly with eclipse or with the following maven command:
 
-`mvn clean install`
-
-the version of the JAR is defined in the `pom.xml` definition file. If you change the version, change also the Dockerfile to point ot the right version.
-
-Create the Docker Image
-
-`docker build `
+```bash
+mvn clean install
+```
+or 
+```bash
+sh buildjaranddocker.sh
+```
+which compiles it and creates the docker image. You need the Docker service running in the Host. To connect to the Docker Daemo from WSL [here is a tutorial](https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly)
