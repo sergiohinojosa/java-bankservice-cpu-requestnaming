@@ -14,6 +14,8 @@ This application was created with [Visual Code](https://code.visualstudio.com/) 
 
 ## The Bankjob.properties
 
+You can play around with the properties of the application changing the amount of threads, failure-rate, sleeptimes, etc..
+
 ```properties
 # Urls to check
 urls=https://blog.dynatrace.com,https://help.dynatrace.com,https://www.dynatrace.com,http://172.17.0.1:9080/easytravel/rest/journeys/recommendation/
@@ -30,11 +32,43 @@ threads=25
 # Maximal sleep time between job execution (its called with random) in s
 sleeptime=6
 ```
-Modify the properties and run the BankTask file to reflect the changes inside Visual Studio Code. You can also execute the file `sh buildjaranddocker.sh` to build it.
+After modifying the properties you have to run the BankTask again so the properties are loaded. You can run this also in debug mode from within Visual Studio Code. Or better yet,  execute the file `sh buildjaranddocker.sh` to compile it and pack it in the docker container.
 
 ## The Application Structure
 
-TBD
+```bash
+├── Dockerfile						Dockerfile for creating the docker image	
+├── *.sh							Shell helper files for building the image
+├── conf
+│   ├── bankjob.properties			BankJobs configuration properties
+│   └── logger.properties			Logger configurations
+├── doc							Folder for documentation 	
+├── log							Folder with the application logs   
+├── pom.xml						Maven configuration	
+├── src
+│   └── main
+│      └── java
+│          └── com
+│              └── dynatrace
+│                  └── se
+│                      └── bankjob
+│                          ├── business				Folder with custom exceptions
+│                          ├── data				
+│                          │   └── BankData.java		Singleton for holding Data
+│                          ├── fibonacci
+│                          │   └── Fibonacci.java		Class for calculating Fibonacci
+│                          ├── runner
+│                          │   ├── BankTask.java		Main Class that starts the Threads
+│                          │   └── BankThread.java		BankThread Definition
+│                          └── util
+│                              ├── Helper.java			Helper Class
+│                              └── Job.java			Job Types (Enumeration)
+│
+│
+└── target		Directory where compiled classes and libraries 
+```
+
+
 
 ## Open in Visual Studio Code 
 
