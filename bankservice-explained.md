@@ -54,18 +54,18 @@ After modifying the properties you have to run the BankTask again so the propert
 │                      └── bankjob
 │                          ├── business				Folder with custom exceptions
 │                          ├── data				
-│                          │   └── BankData.java		Singleton for holding Data
+│                          │   └── BankData.java		Singleton for holding initialization Data
 │                          ├── fibonacci
 │                          │   └── Fibonacci.java		Class for calculating Fibonacci
 │                          ├── runner
-│                          │   ├── BankTask.java		Main Class that starts the Threads
+│                          │   ├── BankTask.java		Main Class that starts the Threads in the ThreadGroups.
 │                          │   └── BankThread.java		BankThread Definition
 │                          └── util
 │                              ├── Helper.java			Helper Class
 │                              └── Job.java			Job Types (Enumeration)
 │
 │
-└── target		Directory where compiled classes and libraries 
+└── target		Directory where compiled classes and libraries will land
 ```
 
 
