@@ -8,7 +8,7 @@ docker run -d shinojosa/bankjob:perform2020
 > This command will pull the image from docker hub. You only need docker and an internet connection. The version downloaded is the version presented in [Perform 2020 in las Vegas](https://www.dynatrace.com/perform-vegas/).  
 
 
-#  Developing and playing around with the application
+## Playing around with the application
 
 This application was created with [Visual Code](https://code.visualstudio.com/) and [Maven](https://maven.apache.org/). There is a `conf` directory. In there there you can play around with the properties of the application. 
 
@@ -30,12 +30,11 @@ threads=25
 # Maximal sleep time between job execution (its called with random) in s
 sleeptime=6
 ```
-
-
+Modify the properties and run the BankTask file to reflect the changes inside Visual Studio Code. You can also execute the file `sh buildjaranddocker.sh` to build it.
 
 ## The Application Structure
 
-
+TBD
 
 ## Open in Visual Studio Code 
 
