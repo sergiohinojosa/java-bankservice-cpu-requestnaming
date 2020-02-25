@@ -6,11 +6,13 @@ This is a manual task and manual tasks are boring (we don't like manual tasks), 
 
 If you want to learn more about customizing service detection via API please read the following post:
 
-https://notes.lab.dynatrace.org/enhancing-and-customizing-the-dynatrace-service-detection/#public-network-subdomains
+https://notes.lab.dynatrace.org/enhancing-and-customizing-the-dynatrace-service-detection/
 
 ## Enhance the detection of the Dynatrace public subdomains
 
-save the following json as `myapirule.json` file
+[more about public network subdomains](https://notes.lab.dynatrace.org/enhancing-and-customizing-the-dynatrace-service-detection/#public-network-subdomains)
+
+Save the following json as `myapirule.json` file
 
 ```json
  {
