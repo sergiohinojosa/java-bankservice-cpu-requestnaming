@@ -1,6 +1,14 @@
-# Bankjob
+# The Bankservice
 
-This is a simple java application running in a container that executes different task in the background. The idea of this application is for educational purposes for creating a custom service and rename the transactions.  This way Dynatrace can automatically keep track of the different type of transactions being exposed via custom service.
+With this small tutorial we will get a better understanding on how Davis baselines all the transactions in your environment. This is **key** for **automatic Root Cause analysis**. 
+
+Davis does a tremendous job doing this with zero configuration. Nevertheless here is a specific small application that deviates from standards and executes small Jobs from multiple threads running in the background. With a little bit of configuration and human intuition we'll be able to **help Davis help us!**
+
+![](doc/davis_knows.png)
+
+## About the Bankservice application
+
+This is a simple java application that can run as a standalone JVM or inside a docker container. This application executes small task in the background from different threads placed in different thread groups. The idea of this application is for educational purposes only. With Dynatrace you'll create a custom service to expose all transactions and then rename the transactions so Davis can calculate automatically the hotspots and will baseline every single Job-type. With this small configuration, Dynatrace will automatically keep track of all different types of jobs (even when executed in the background) and you can then go to sleep peacefully without having to configure any thresholds nor alerts and if something fails, Davis will let you know, automatically 🤩. **So, let's help Davis helps us**
 
 ## Running it
 
